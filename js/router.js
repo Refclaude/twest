@@ -1,34 +1,66 @@
-/* QUIZEEY · router.js — routing berbasis hash + penjaga login */
-const Router = (() => {
-  'use strict';
-  const routes = {
-    '/masuk': { auth: null, title: 'Masuk' },
-    '/beranda': { auth: 'user', title: 'Beranda' },
-    '/kuis': { auth: 'user', title: 'Kuis' },
-    '/avatar': { auth: 'user', title: 'Avatar' },
-    '/admin': { auth: 'staff', title: 'Pengawas' }
-  };
-  const current = () => location.hash.replace(/^#/, '') || '/masuk';
-  const go = (p) => { if (current() === p) render(); else location.hash = p; };
+import { APP_CONFIG } from "./config.js";
 
-  function render() {
-    let p = current();
-    if (!routes[p]) p = '/masuk';
-    const me = window.App && App.session();
-    const need = routes[p].auth;
-    if (need && !me) return go('/masuk');
-    if (!need && me) return go(me.role === 'user' ? '/beranda' : '/admin');
-    if (need === 'user' && me.role !== 'user') return go('/admin');
-    if (need === 'staff' && me.role === 'user') return go('/beranda');
+export function normalizeHash(rawHash) {
+  if (!rawHash || rawHash === "#" || rawHash === "#/") {
+    return "#/masuk";
+  }
+  const clean = rawHash.startsWith("#") ? rawHash : "#" + rawHash;
+  return APP_CONFIG.routes.includes(clean) ? clean : "#/masuk";
+}
 
-    document.querySelectorAll('[data-view]').forEach((v) => { v.hidden = v.dataset.view !== p; });
-    document.title = routes[p].title + ' · Quizeey';
-    const h1 = document.querySelector('[data-view="' + p + '"] h1');
-    if (h1) { h1.tabIndex = -1; h1.focus({ preventScroll: true }); }
-    window.scrollTo(0, 0);
-    if (window.App && App.onRoute) App.onRoute(p);
+export function focusActiveHeading(mainEl) {
+  requestAnimationFrame(() => {
+    const h1 = mainEl.querySelector("h1");
+    if (h1) {
+      if (!h1.hasAttribute("tabindex")) {
+        h1.setAttribute("tabindex", "-1");
+      }
+      h1.focus({ preventScroll: true });
+    }
+    window.scrollTo({ top: 0, behavior: "auto" });
+  });
+}
+
+export function createRouter({ getUser, setReturnTo, getReturnTo, onRender, mainEl }) {
+  function resolveAndRender(isRouteChange = false) {
+    const route = normalizeHash(window.location.hash);
+    const user = getUser();
+
+    if (APP_CONFIG.protectedRoutes.has(route) && !user) {
+      setReturnTo(route);
+      if (window.location.hash !== "#/masuk") {
+        window.location.replace("#/masuk");
+        return;
+      }
+    }
+
+    if (route === "#/masuk" && user) {
+      const fallbackDest = user.role === "admin" ? "#/admin" : "#/beranda";
+      const target = getReturnTo() || fallbackDest;
+      window.location.replace(target);
+      return;
+    }
+
+    const effectiveRoute = APP_CONFIG.protectedRoutes.has(route) && !user ? "#/masuk" : route;
+    onRender(effectiveRoute, isRouteChange);
+    focusActiveHeading(mainEl);
   }
 
-  window.addEventListener('hashchange', render);
-  return { go, render, current };
-})();
+  function navigateTo(hashRoute) {
+    if (window.location.hash === hashRoute) {
+      resolveAndRender(true);
+    } else {
+      window.location.hash = hashRoute;
+    }
+  }
+
+  function start() {
+    window.addEventListener("hashchange", () => resolveAndRender(true));
+    if (!window.location.hash) {
+      window.location.replace("#/masuk");
+    }
+    resolveAndRender(false);
+  }
+
+  return { start, navigateTo, resolveAndRender };
+}
