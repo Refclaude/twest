@@ -1,0 +1,33 @@
+/* QUIZEEY · layout.css — mobile-first, breakpoint 600 / 840 / 1200 */
+.app-bar { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: var(--space-3); padding: calc(var(--space-2) + env(safe-area-inset-top)) max(var(--space-4), env(safe-area-inset-right)) var(--space-2) max(var(--space-4), env(safe-area-inset-left)); background: var(--bar-bg); -webkit-backdrop-filter: blur(var(--surface-blur)) saturate(180%); backdrop-filter: blur(var(--surface-blur)) saturate(180%); border-bottom: 1px solid var(--color-border); }
+.app-bar__end { margin-left: auto; display: flex; align-items: center; gap: var(--space-3); }
+.sync { display: none; }
+.sync::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 6px; border-radius: 50%; background: var(--color-muted); }
+.sync[data-state="online"]::before { background: var(--color-success); }
+.sync[data-state="error"]::before { background: var(--color-danger); }
+
+.page { width: min(100%, 64rem); margin-inline: auto; padding: var(--space-5) max(var(--space-4), env(safe-area-inset-left)) calc(var(--space-7) + env(safe-area-inset-bottom)); }
+.stack { display: grid; gap: var(--space-5); }
+[data-view]:not([hidden]) { animation: view-in var(--dur-2) var(--ease-out); }
+
+.page--center { min-height: calc(100vh - 72px); min-height: calc(100dvh - 72px); display: grid; align-content: center; }
+.login { width: min(100%, 26rem); margin-inline: auto; display: grid; gap: var(--space-5); animation: rise var(--dur-3) var(--ease-out) both; }
+.login__head { display: grid; gap: var(--space-3); }
+.form { display: grid; gap: var(--space-4); }
+
+.home { display: grid; gap: var(--space-5); }
+.actions { display: grid; gap: var(--space-3); }
+.hello { display: grid; gap: var(--space-3); }
+
+@media (min-width: 600px) {
+  .sync { display: inline-block; font-size: var(--fs-0); color: var(--color-muted); }
+  .actions { grid-template-columns: 1fr 1fr; }
+  .toasts { left: auto; }
+}
+@media (min-width: 840px) {
+  .home { grid-template-columns: 1.15fr 1fr; align-items: start; }
+  .home__wide { grid-column: 1 / -1; }
+  .page { padding-top: var(--space-6); }
+}
+@media (min-width: 1200px) { .page { width: min(100%, 72rem); } }
+@media (max-height: 520px) and (orientation: landscape) { .page--center { align-content: start; } }
