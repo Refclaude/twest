@@ -1,93 +1,362 @@
-/* QUIZEEY · tokens.css
-   Lapisan 1 primitive → 2 semantic → 3 component. Tema hanya mengganti lapisan 2 (dan 3 bila perlu). */
+/* ==========================================================================
+​1. SELF-HOSTED VARIABLE FONT & FALLBACK METRICS
+========================================================================== */
+@font-face {
+font-family: "Plus Jakarta Sans";
+src: url("../assets/fonts/PlusJakartaSans-Variable-Latin.woff2") format("woff2-variations");
+font-weight: 400 800;
+font-style: normal;
+font-display: swap;
+unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF;
+}
+​@font-face {
+font-family: "Plus Jakarta Sans Fallback";
+src: local("Arial");
+size-adjust: 102%;
+ascent-override: 98%;
+descent-override: 24%;
+line-gap-override: 0%;
+}
+​/* ==========================================================================
+2. PRIMITIVE TOKENS (Skala Warna, Spasi 4px, Radius, Bayangan, Gerak)
+========================================================================== */
 :root {
-  /* ---- 1. PRIMITIVE ---- */
-  --ink-900: #0e1330; --ink-800: #161c42; --ink-700: #222a5c;
-  --blue-500: #2347d6; --blue-400: #4d6df0; --blue-300: #8da2f7;
-  --paper-50: #f3f5fb; --paper-100: #e8ebf6;
-  --yellow-400: #ffd43b; --green-500: #19b37a; --red-500: #e5484d;
-  --space-1: .25rem; --space-2: .5rem; --space-3: .75rem; --space-4: 1rem; --space-5: 1.5rem; --space-6: 2rem; --space-7: 3rem;
-  --radius-1: 8px; --radius-2: 14px; --radius-3: 24px; --radius-pill: 999px;
-  --dur-1: 150ms; --dur-2: 250ms; --dur-3: 400ms; --ease-out: cubic-bezier(.2, .8, .2, 1);
-  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --fs-0: clamp(.8125rem, .79rem + .1vw, .875rem);
-  --fs-1: clamp(.9375rem, .91rem + .15vw, 1rem);
-  --fs-2: clamp(1.125rem, 1.05rem + .4vw, 1.375rem);
-  --fs-3: clamp(1.625rem, 1.3rem + 1.2vw, 2.5rem);
-  --tap: 44px;
-
-  /* nilai awal tema dinamis (ditimpa theme.js) */
-  --lg-1: #2347d6; --lg-2: #0ea5e9; --lg-angle: 135deg; --lg-text: 255, 255, 255; --lg-shade: 8, 12, 28;
-
-  /* ---- 2. SEMANTIC (tema Klasik = bawaan) ---- */
-  --color-bg: var(--ink-900);
-  --bg-image: radial-gradient(120% 80% at 50% -10%, var(--ink-700), var(--ink-900) 65%);
-  --color-surface: var(--ink-800);
-  --color-surface-2: var(--ink-700);
-  --color-on-surface: #eef1ff;
-  --color-muted: #a8b0d8;
-  --color-primary: var(--blue-500);
-  --color-on-primary: #fff;
-  --color-accent: var(--yellow-400);
-  --color-border: rgba(255, 255, 255, .14);
-  --color-focus: var(--blue-300);
-  --color-success: var(--green-500);
-  --color-danger: #ff6b6f;
-  --color-gold: var(--yellow-400);
-  --color-scrim: rgba(5, 8, 25, .6);
-  --surface-blur: 0px;
-  --shadow-card: 0 12px 30px -12px rgba(0, 0, 0, .55);
-
-  /* ---- 3. COMPONENT ---- */
-  --btn-bg: var(--color-primary); --btn-fg: var(--color-on-primary); --btn-border: transparent; --btn-shadow: none;
-  --btn-radius: var(--radius-2);
-  --card-bg: var(--color-surface); --card-radius: var(--radius-3); --card-border: var(--color-border); --card-shadow: var(--shadow-card);
-  --field-bg: rgba(255, 255, 255, .05); --field-border: var(--color-border); --field-radius: var(--radius-2);
-  --tab-active-bg: var(--color-primary); --tab-active-fg: var(--color-on-primary);
-  --toast-bg: var(--ink-700); --toast-fg: #fff;
-  --bar-bg: rgba(14, 19, 48, .85); --drawer-bg: var(--ink-800);
+color-scheme: light dark;
+​--p-white: #ffffff;
+--p-black: #090d16;
+​--p-slate-50: #f8fafc;
+--p-slate-100: #f1f5f9;
+--p-slate-200: #e2e8f0;
+--p-slate-300: #cbd5e1;
+--p-slate-400: #94a3b8;
+--p-slate-500: #64748b;
+--p-slate-600: #475569;
+--p-slate-700: #334155;
+--p-slate-800: #1e293b;
+--p-slate-900: #0f172a;
+--p-slate-950: #060a13;
+​--p-blue-50: #eff6ff;
+--p-blue-100: #dbeafe;
+--p-blue-200: #bfdbfe;
+--p-blue-400: #60a5fa;
+--p-blue-500: #3b82f6;
+--p-blue-600: #2563eb;
+--p-blue-700: #1d4ed8;
+--p-blue-800: #1e40af;
+--p-blue-900: #1e3a8a;
+​--p-teal-50: #f0fdfa;
+--p-teal-100: #ccfbf1;
+--p-teal-400: #2dd4bf;
+--p-teal-600: #0d9488;
+--p-teal-700: #0f766e;
+--p-teal-800: #115e59;
+​--p-green-50: #f0fdf4;
+--p-green-200: #bbf7d0;
+--p-green-400: #4ade80;
+--p-green-700: #15803d;
+--p-green-950: #052e16;
+​--p-amber-50: #fffbeb;
+--p-amber-200: #fde68a;
+--p-amber-400: #fbbf24;
+--p-amber-500: #f59e0b;
+--p-amber-700: #b45309;
+--p-amber-950: #451a03;
+​--p-red-50: #fef2f2;
+--p-red-100: #fee2e2;
+--p-red-200: #fecaca;
+--p-red-400: #f87171;
+--p-red-600: #dc2626;
+--p-red-700: #b91c1c;
+--p-red-800: #991b1b;
+--p-red-950: #450a0a;
+​/* Skala Spasi 4px */
+--p-space-0: 0px;
+--p-space-1: 4px;
+--p-space-2: 8px;
+--p-space-3: 12px;
+--p-space-4: 16px;
+--p-space-5: 20px;
+--p-space-6: 24px;
+--p-space-8: 32px;
+--p-space-10: 40px;
+--p-space-12: 48px;
+​/* Target Sentuh & Jarak Aksesibel */
+--touch-target-min: 44px;
+--touch-gap-min: var(--p-space-2);
+​/* Radius */
+--p-radius-none: 0px;
+--p-radius-xs: 4px;
+--p-radius-sm: 8px;
+--p-radius-md: 12px;
+--p-radius-lg: 16px;
+--p-radius-xl: 24px;
+--p-radius-pill: 9999px;
+​/* Bayangan */
+--p-shadow-none: none;
+--p-shadow-sm: 0 1px 2px color-mix(in srgb, var(--p-black) 8%, transparent);
+--p-shadow-md: 0 6px 18px color-mix(in srgb, var(--p-black) 10%, transparent);
+--p-shadow-lg: 0 16px 36px color-mix(in srgb, var(--p-black) 16%, transparent);
+​/* Sistem Motion: Durasi 150 / 250 / 400ms */
+--motion-dur-fast: 150ms;
+--motion-dur-page: 200ms;
+--motion-dur-normal: 250ms;
+--motion-dur-slow: 400ms;
+--motion-dur-reduced: 100ms;
+--motion-ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+​/* Tipografi Fluid & Lebar Baca */
+--font-sans: "Plus Jakarta Sans", "Plus Jakarta Sans Fallback", system-ui, -apple-system, sans-serif;
+--measure-max: 70ch;
+--text-xs: clamp(0.75rem, 0.72rem + 0.15vw, 0.8125rem);
+--text-sm: clamp(0.875rem, 0.84rem + 0.18vw, 0.9375rem);
+--text-base: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+--text-lg: clamp(1.125rem, 1.06rem + 0.3vw, 1.25rem);
+--text-xl: clamp(1.375rem, 1.24rem + 0.6vw, 1.75rem);
+--text-2xl: clamp(1.75rem, 1.5rem + 1.1vw, 2.25rem);
 }
-
-/* ================= LIQUID GLASS (gradasi saja) ================= */
-html[data-theme="liquid"] {
-  --color-bg: var(--lg-1);
-  --bg-image: linear-gradient(var(--lg-angle), var(--lg-1), var(--lg-2));
-  --color-surface: rgba(var(--lg-shade), .2); --color-surface-2: rgba(var(--lg-shade), .3);
-  --color-on-surface: rgb(var(--lg-text)); --color-muted: rgba(var(--lg-text), .74);
-  --color-primary: rgba(255, 255, 255, .3); --color-on-primary: rgb(var(--lg-text));
-  --color-accent: rgb(var(--lg-text)); --color-focus: rgb(var(--lg-text));
-  --color-border: rgba(255, 255, 255, .3); --color-scrim: rgba(0, 0, 0, .25);
-  --surface-blur: 30px;
-  --card-bg: linear-gradient(145deg, rgba(255, 255, 255, .26), rgba(255, 255, 255, .07)), linear-gradient(rgba(var(--lg-shade), .2), rgba(var(--lg-shade), .2));
-  --card-shadow: inset 1.5px 1.5px 1px rgba(255, 255, 255, .55), inset -1px -1px 1px rgba(255, 255, 255, .2), 0 22px 44px -14px rgba(0, 0, 0, .4);
-  --card-radius: 32px; --btn-radius: var(--radius-pill);
-  --btn-bg: linear-gradient(rgba(var(--lg-shade), .25), rgba(var(--lg-shade), .25)), linear-gradient(135deg, rgba(255, 255, 255, .42), rgba(255, 255, 255, .14));
-  --btn-fg: rgb(var(--lg-text)); --btn-border: rgba(255, 255, 255, .5);
-  --btn-shadow: inset 1px 1px 1px rgba(255, 255, 255, .6), 0 8px 20px rgba(0, 0, 0, .22);
-  --field-bg: rgba(var(--lg-shade), .28); --field-border: rgba(255, 255, 255, .3); --field-radius: 18px;
-  --tab-active-bg: rgba(255, 255, 255, .38); --tab-active-fg: rgb(var(--lg-text));
-  --toast-bg: rgba(var(--lg-shade), .6); --toast-fg: rgb(var(--lg-text));
-  --bar-bg: rgba(var(--lg-shade), .18); --drawer-bg: rgba(var(--lg-shade), .35);
+​/* ==========================================================================
+3. SEMANTIC TOKENS (Tema 1: Sekolah Standar)
+========================================================================== */
+:root,
+[data-theme="sekolah"] {
+--color-bg: var(--p-slate-50);
+--color-surface: var(--p-white);
+--color-surface-alt: var(--p-slate-100);
+--color-surface-elevated: var(--p-white);
+--color-on-surface: var(--p-slate-900);
+--color-on-surface-muted: var(--p-slate-600);
+--color-on-surface-disabled: var(--p-slate-400);
+​--color-primary: var(--p-blue-700);
+--color-primary-hover: var(--p-blue-800);
+--color-primary-active: var(--p-blue-900);
+--color-primary-soft: var(--p-blue-50);
+--color-on-primary: var(--p-white);
+​--color-secondary: var(--p-teal-700);
+--color-secondary-hover: var(--p-teal-800);
+--color-on-secondary: var(--p-white);
+​--color-border: var(--p-slate-300);
+--color-border-subtle: var(--p-slate-200);
+--color-focus-ring: var(--p-blue-600);
+​--color-success: var(--p-green-700);
+--color-success-bg: var(--p-green-50);
+--color-success-border: var(--p-green-200);
+​--color-coin: var(--p-amber-500);
+--color-coin-text: var(--p-amber-700);
+--color-coin-bg: var(--p-amber-50);
+​--color-error: var(--p-red-700);
+--color-error-bg: var(--p-red-50);
+--color-error-border: var(--p-red-200);
+--color-on-error: var(--p-white);
+​--color-avatar-skin: var(--p-amber-200);
+--color-avatar-ink: var(--p-slate-900);
+--color-avatar-hair-1: var(--p-slate-800);
+--color-avatar-hair-2: var(--p-slate-700);
+--color-avatar-shirt-1: var(--p-blue-700);
+--color-avatar-shirt-2: var(--p-teal-700);
+​--surface-fill: var(--color-surface);
+--surface-backdrop: none;
+--surface-border-style: solid;
+--semantic-shadow: var(--p-shadow-md);
 }
-html[data-theme="liquid"][data-lg-text="light"] { --text-shadow: 0 1px 2px rgba(0, 0, 0, .35); }
-html[data-theme="liquid"][data-lg-text="dark"] { --color-danger: #b3261e; --color-success: #047857; --color-gold: #8a5a00; }
-
-/* ================= MATERIAL YOU (warna dinamis dari 1 warna kustom) ================= */
-html[data-theme="material"] {
-  --color-bg: var(--md-surface); --bg-image: none;
-  --color-surface: var(--md-surface-container); --color-surface-2: var(--md-surface-container-high);
-  --color-on-surface: var(--md-on-surface); --color-muted: var(--md-on-surface-variant);
-  --color-primary: var(--md-primary); --color-on-primary: var(--md-on-primary);
-  --color-accent: var(--md-primary); --color-focus: var(--md-primary);
-  --color-border: var(--md-outline-variant); --color-scrim: rgba(0, 0, 0, .4);
-  --surface-blur: 0px; --shadow-card: none; --card-radius: 28px; --btn-radius: var(--radius-pill);
-  --field-bg: transparent; --field-border: var(--md-outline); --field-radius: 14px;
-  --tab-active-bg: var(--md-secondary-container); --tab-active-fg: var(--md-on-secondary-container);
-  --toast-bg: var(--md-inverse-surface); --toast-fg: var(--md-inverse-on-surface);
-  --bar-bg: var(--md-surface-container); --drawer-bg: var(--md-surface-container-low);
+​@media (prefers-color-scheme: dark) {
+:root:not([data-color-scheme="light"]),
+[data-theme="sekolah"]:not([data-color-scheme="light"]) {
+--color-bg: var(--p-slate-950);
+--color-surface: var(--p-slate-900);
+--color-surface-alt: var(--p-slate-800);
+--color-surface-elevated: var(--p-slate-800);
+--color-on-surface: var(--p-slate-50);
+--color-on-surface-muted: var(--p-slate-300);
+--color-on-surface-disabled: var(--p-slate-500);
+​--color-primary: var(--p-blue-400);
+--color-primary-hover: var(--p-blue-500);
+--color-primary-active: var(--p-blue-600);
+--color-primary-soft: color-mix(in srgb, var(--p-blue-900) 55%, var(--p-slate-900));
+--color-on-primary: var(--p-slate-950);
+​--color-secondary: var(--p-teal-400);
+--color-secondary-hover: var(--p-teal-600);
+--color-on-secondary: var(--p-slate-950);
+​--color-border: var(--p-slate-700);
+--color-border-subtle: var(--p-slate-800);
+--color-focus-ring: var(--p-blue-400);
+​--color-success: var(--p-green-400);
+--color-success-bg: var(--p-green-950);
+--color-success-border: var(--p-green-700);
+​--color-coin: var(--p-amber-400);
+--color-coin-text: var(--p-amber-400);
+--color-coin-bg: var(--p-amber-950);
+​--color-error: var(--p-red-400);
+--color-error-bg: var(--p-red-950);
+--color-error-border: var(--p-red-700);
+--color-on-error: var(--p-slate-950);
 }
-html[data-theme="material"][data-scheme="light"] { --color-gold: #8a5a00; --color-success: #047857; --color-danger: #b3261e; }
-
-@media (prefers-reduced-motion: reduce) {
-  :root { --dur-1: 1ms; --dur-2: 1ms; --dur-3: 1ms; }
+}
+​/* ==========================================================================
+4. TEMA 2: LIQUID GLASS (2 Warna Gradasi + Sudut, Kontras Aman WCAG AA)
+========================================================================== */
+[data-theme="liquid-glass"] {
+--glass-c1: var(--p-blue-100);
+--glass-c2: var(--p-teal-100);
+--glass-angle: 135deg;
+​--color-bg: linear-gradient(var(--glass-angle), var(--glass-c1), var(--glass-c2));
+--color-surface: color-mix(in srgb, var(--glass-c1) 74%, var(--p-white));
+--color-surface-alt: color-mix(in srgb, var(--glass-c2) 58%, var(--p-white));
+--color-surface-elevated: color-mix(in srgb, var(--glass-c1) 64%, var(--glass-c2));
+--color-on-surface: var(--p-slate-950);
+--color-on-surface-muted: var(--p-slate-800);
+--color-on-surface-disabled: var(--p-slate-600);
+​--color-primary: var(--p-blue-800);
+--color-primary-hover: var(--p-blue-900);
+--color-primary-active: var(--p-slate-950);
+--color-primary-soft: color-mix(in srgb, var(--glass-c1) 82%, var(--p-white));
+--color-on-primary: var(--p-white);
+​--color-secondary: var(--p-teal-800);
+--color-secondary-hover: var(--p-teal-700);
+--color-on-secondary: var(--p-white);
+​--color-border: color-mix(in srgb, var(--glass-c2) 55%, var(--p-slate-700));
+--color-border-subtle: color-mix(in srgb, var(--glass-c1) 65%, var(--p-slate-500));
+--color-focus-ring: var(--p-blue-900);
+​--color-success: var(--p-green-700);
+--color-success-bg: var(--p-green-50);
+--color-success-border: var(--p-green-200);
+​--color-coin: var(--p-amber-500);
+--color-coin-text: var(--p-amber-700);
+--color-coin-bg: var(--p-amber-50);
+​--color-error: var(--p-red-800);
+--color-error-bg: var(--p-red-100);
+--color-error-border: var(--p-red-600);
+--color-on-error: var(--p-white);
+​--surface-fill: linear-gradient(
+var(--glass-angle),
+color-mix(in srgb, var(--glass-c1) 80%, var(--p-white) 20%),
+color-mix(in srgb, var(--glass-c2) 80%, var(--p-white) 20%)
+);
+--surface-backdrop: blur(18px) saturate(150%);
+--surface-border-style: solid;
+--semantic-shadow: var(--p-shadow-lg);
+}
+​/* ==========================================================================
+5. TEMA 3: MATERIAL YOU (Palet Tonal dari 1 Warna Kustom --m3-seed)
+========================================================================== */
+[data-theme="material-you"] {
+--m3-seed: var(--p-blue-700);
+​--m3-t-99: color-mix(in srgb, var(--m3-seed) 4%, var(--p-white));
+--m3-t-95: color-mix(in srgb, var(--m3-seed) 10%, var(--p-white));
+--m3-t-90: color-mix(in srgb, var(--m3-seed) 18%, var(--p-white));
+--m3-t-80: color-mix(in srgb, var(--m3-seed) 32%, var(--p-white));
+--m3-t-40: color-mix(in srgb, var(--m3-seed) 85%, var(--p-black));
+--m3-t-30: color-mix(in srgb, var(--m3-seed) 70%, var(--p-black));
+--m3-t-20: color-mix(in srgb, var(--m3-seed) 50%, var(--p-black));
+--m3-t-10: color-mix(in srgb, var(--m3-seed) 25%, var(--p-black));
+​--color-bg: var(--m3-t-99);
+--color-surface: var(--m3-t-95);
+--color-surface-alt: var(--m3-t-90);
+--color-surface-elevated: var(--m3-t-90);
+--color-on-surface: var(--m3-t-10);
+--color-on-surface-muted: var(--m3-t-30);
+--color-on-surface-disabled: color-mix(in srgb, var(--m3-t-10) 40%, transparent);
+​--color-primary: var(--m3-seed);
+--color-primary-hover: var(--m3-t-30);
+--color-primary-active: var(--m3-t-20);
+--color-primary-soft: var(--m3-t-90);
+--color-on-primary: var(--p-white);
+​--color-secondary: var(--m3-t-40);
+--color-secondary-hover: var(--m3-t-20);
+--color-on-secondary: var(--p-white);
+​--color-border: var(--m3-t-80);
+--color-border-subtle: var(--m3-t-90);
+--color-focus-ring: var(--m3-t-20);
+​--color-success: var(--p-green-700);
+--color-success-bg: var(--p-green-50);
+--color-success-border: var(--p-green-200);
+​--color-coin: var(--p-amber-500);
+--color-coin-text: var(--p-amber-700);
+--color-coin-bg: var(--p-amber-50);
+​--color-error: var(--p-red-700);
+--color-error-bg: var(--p-red-50);
+--color-error-border: var(--p-red-600);
+--color-on-error: var(--p-white);
+​--surface-fill: var(--color-surface);
+--surface-backdrop: none;
+--surface-border-style: solid;
+--semantic-shadow: var(--p-shadow-md);
+}
+​@media (prefers-color-scheme: dark) {
+[data-theme="material-you"]:not([data-color-scheme="light"]) {
+--color-bg: var(--m3-t-10);
+--color-surface: var(--m3-t-20);
+--color-surface-alt: var(--m3-t-30);
+--color-surface-elevated: var(--m3-t-30);
+--color-on-surface: var(--m3-t-99);
+--color-on-surface-muted: var(--m3-t-90);
+--color-primary: var(--m3-t-80);
+--color-primary-hover: var(--m3-t-90);
+--color-on-primary: var(--m3-t-10);
+--color-border: var(--m3-t-40);
+--color-border-subtle: var(--m3-t-30);
+--color-focus-ring: var(--m3-t-80);
+​--color-success: var(--p-green-400);
+--color-success-bg: var(--p-green-950);
+--color-success-border: var(--p-green-700);
+​--color-coin: var(--p-amber-400);
+--color-coin-text: var(--p-amber-400);
+--color-coin-bg: var(--p-amber-950);
+​--color-error: var(--p-red-400);
+--color-error-bg: var(--p-red-950);
+--color-error-border: var(--p-red-700);
+--color-on-error: var(--p-slate-950);
+}
+}
+​/* ==========================================================================
+6. COMPONENT TOKENS
+========================================================================== */
+:root {
+--btn-radius: var(--p-radius-md);
+--btn-px: var(--p-space-4);
+--btn-py: var(--p-space-2);
+--btn-font-size: var(--text-sm);
+--btn-transition: transform var(--motion-dur-fast) var(--motion-ease-standard),
+opacity var(--motion-dur-fast) var(--motion-ease-standard);
+​--input-bg: var(--color-surface);
+--input-text: var(--color-on-surface);
+--input-border: var(--color-border);
+--input-radius: var(--p-radius-sm);
+--input-px: var(--p-space-3);
+--input-py: var(--p-space-2);
+​--card-bg: var(--surface-fill);
+--card-text: var(--color-on-surface);
+--card-border: var(--color-border);
+--card-radius: var(--p-radius-lg);
+--card-padding: clamp(var(--p-space-4), 2.5vw, var(--p-space-6));
+--card-shadow: var(--semantic-shadow);
+​--seg-track-bg: var(--color-surface-alt);
+--seg-radius: var(--p-radius-md);
+--seg-active-bg: var(--color-surface);
+--seg-active-text: var(--color-on-surface);
+​--chip-bg: var(--color-surface-alt);
+--chip-text: var(--color-on-surface);
+--chip-border: var(--color-border);
+--chip-radius: var(--p-radius-pill);
+--chip-active-bg: var(--color-primary);
+--chip-active-text: var(--color-on-primary);
+​--overlay-bg: color-mix(in srgb, var(--p-black) 56%, transparent);
+--modal-bg: var(--color-surface-elevated);
+--modal-radius: var(--p-radius-xl);
+--drawer-width: min(400px, 92vw);
+​--toast-bg: var(--color-surface-elevated);
+--toast-text: var(--color-on-surface);
+--toast-border: var(--color-border);
+--toast-radius: var(--p-radius-md);
+​--table-header-bg: var(--color-surface-alt);
+--table-row-hover: var(--color-primary-soft);
+--table-border: var(--color-border-subtle);
+--table-radius: var(--p-radius-md);
+​--quiz-option-bg: var(--color-surface);
+--quiz-option-border: var(--color-border);
+--quiz-option-radius: var(--p-radius-md);
+--quiz-option-selected-bg: var(--color-primary-soft);
+--quiz-option-selected-border: var(--color-primary);
+​--avatar-card-bg: var(--color-surface);
+--avatar-card-border: var(--color-border);
+--avatar-card-radius: var(--p-radius-md);
+--avatar-card-selected-border: var(--color-primary);
 }
