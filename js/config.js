@@ -4,25 +4,12 @@ export const APP_CONFIG = {
   routes: ["#/masuk", "#/beranda", "#/kuis", "#/avatar", "#/admin"],
   protectedRoutes: new Set(["#/beranda", "#/kuis", "#/avatar", "#/admin"]),
   themes: ["sekolah", "liquid-glass", "material-you"],
-  avatarBasePath: "./assets/avatar/"
-};
-
-export const DEMO_USERS = {
-  siswa1: {
-    username: "siswa1",
-    name: "Raka Pratama",
-    role: "student",
-    password: "123",
-    points: 1250,
-    coins: 340
-  },
-  admin1: {
-    username: "admin1",
-    name: "Bu Sari (Admin)",
-    role: "admin",
-    password: "123",
-    points: 0,
-    coins: 0
+  avatarBasePath: "./assets/avatar/",
+  jsonBin: {
+    enabled: false, // Ubah ke true setelah mengisi binId dan apiKey
+    baseUrl: "https://api.jsonbin.io/v3/b",
+    binId: "ISI_BIN_ID_ANDA",
+    apiKey: "ISI_X_MASTER_KEY_ATAU_ACCESS_KEY_ANDA"
   }
 };
 
